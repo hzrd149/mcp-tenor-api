@@ -1,0 +1,22 @@
+{
+  "name": "tenor-mcp",
+  "module": "src/index.ts",
+  "type": "module",
+  "scripts": {
+    "dev": "mcp-inspector index.ts",
+    "start": "bun run index.ts"
+  },
+  "devDependencies": {
+    "@modelcontextprotocol/inspector": "^0.7.0",
+    "@types/bun": "latest",
+    "prettier": "^3.5.3"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.8.0",
+    "zod": "^3.24.2"
+  },
+  "packageManager": "pnpm@9.15.6"
+}
