@@ -8,4 +8,4 @@ WORKDIR /app
 COPY . .
 
 # Run the server when the container launches
-CMD ["bun", "index.ts"]
+CMD ["bun", "src/index.ts"]

@@ -1,12 +1,17 @@
 {
   "name": "tenor-mcp",
   "version": "0.1.0",
-  "module": "src/index.ts",
   "type": "module",
+  "main": "dist/index.js",
   "scripts": {
-    "dev": "mcp-inspector index.ts",
-    "start": "bun run index.ts"
+    "build": "bun build src/index.ts --outfile dist/index.js",
+    "prepublish": "bun run build",
+    "dev": "mcp-inspector index.ts"
   },
+  "files": [
+    "dist",
+    "src"
+  ],
   "devDependencies": {
     "@modelcontextprotocol/inspector": "^0.7.0",
     "@types/bun": "latest",
