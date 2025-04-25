@@ -3,12 +3,25 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { z } from "zod";
 
-import { ContentFilter } from "./types";
+import { ContentFilter, type TenorImage } from "./types";
 import TenorManager from "./manager";
 
 const API_KEY = process.env.API_KEY;
 if (!API_KEY) {
   throw new Error("API_KEY environment variable is required");
+}
+
+function formatResult(image: TenorImage): { type: "text"; text: string } {
+  return {
+    type: "text",
+    text: Object.entries({
+      url: image.url,
+      description: image.description,
+      tags: image.tags.join(", "),
+    })
+      .map((e) => e.join(": "))
+      .join("\n"),
+  };
 }
 
 const CLIENT_KEY = process.env.CLIENT_KEY || "mcp-tenor-api";
@@ -43,10 +56,7 @@ server.tool(
   async ({ searchTerm, limit }) => {
     const results = await tenorManager.search(searchTerm, limit);
     return {
-      content: results.images.map((image) => ({
-        type: "text",
-        text: image.url,
-      })),
+      content: results.images.map(formatResult),
     };
   },
 );
@@ -66,10 +76,7 @@ server.tool("categories", "Get Tenor categories", async () => {
 server.tool("trending", "Get Tenor trending GIFs", async () => {
   const results = await tenorManager.trending();
   return {
-    content: results.images.map((image) => ({
-      type: "text",
-      text: image.url,
-    })),
+    content: results.images.map(formatResult),
   };
 });
 
